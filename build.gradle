@@ -39,3 +39,7 @@ jar {
 		attributes 'Main-Class': 'co.edu.iudigital.parqueadero.ParqueaderoApplication'
 	}
 }
+
+tasks.named("jar") {
+	enabled = false
+}
