@@ -1,0 +1,177 @@
+### Lista todas las marcas
+GET http://localhost:8080/api/marca
+Content-Type: application/json
+
+[
+  {
+    "id": 1,
+    "nombre": "Audi"
+  }
+]
+###
+PUT http://localhost:8080/api/marca
+
+### Crear una Marca
+POST http://localhost:8080/api/marca
+Content-Type: application/json
+
+{
+  "nombre": "Audi"
+}
+
+### Borrar una Marca
+DELETE http://localhost:8080/api/marca/{{id}}
+
+### Lista todos los dueños
+GET http://localhost:8080/api/dueno
+Content-Type: application/json
+
+[
+  {
+    "id": 1,
+    "nombre": "Pedrito perez",
+    "documentoIdentificacion": "1234567890",
+    "telefono": "1234567890",
+    "correo": "correo5@gmail.com"
+  }
+]
+###
+PUT http://localhost:8080/api/dueno
+
+### Crea un dueño
+//el correo es opcional
+POST http://localhost:8080/api/dueno
+Content-Type: application/json
+
+{
+    "nombre": "Pedrito perez",
+    "documentoIdentificacion": "1234567890",
+    "telefono": "1234567890",
+    "correo": "correo5@gmail.com"
+}
+### Obtiene el dueño por documento
+GET http://localhost:8080/api/dueno/documento/{{documento}}
+
+###
+DELETE http://localhost:8080/api/dueno/{{id}}
+
+### Lista todos los tipos de vehiculos
+
+GET http://localhost:8080/api/tvehiculo
+
+[
+  {
+    "id": 1,
+    "tipo": "CARRO"
+  }
+]
+
+###
+PUT http://localhost:8080/api/tvehiculo
+
+### Crea un tipo vehiculo
+POST http://localhost:8080/api/tvehiculo
+Content-Type: application/json
+
+{
+  "tipo": "Carro"
+}
+
+###
+DELETE http://localhost:8080/api/tvehiculo/{{id}}
+
+### Lista todos los vehiculos
+GET http://localhost:8080/api/vehiculo
+
+[
+  {
+    "id": 1,
+    "placa": "AAA123",
+    "tipoVehiculo": {
+      "id": 1,
+      "tipo": "CARRO"
+    },
+    "marca": {
+      "id": 1,
+      "nombre": "AUDI"
+    },
+    "dueno": {
+      "id": 1,
+      "nombre": "Pedrito perez",
+      "documentoIdentificacion": "1234567890",
+      "telefono": "1234567890",
+      "correo": "correo5@gmail.com"
+    }
+  }
+]
+
+###
+PUT http://localhost:8080/api/vehiculo
+
+### Crea un vehiculo
+POST http://localhost:8080/api/vehiculo
+//para el dueño si se pone id significa que ya existe, si no se coloca se entiende que hay que crearlo con los demas campos, entonces crea vehiculo y dueño
+Content-Type: application/json
+
+{
+  "placa": "aaa123",
+  "tipoVehiculo": {
+    "id": 1
+  },
+  "marca": {
+    "id": 1
+  },
+  "dueno": {
+    "id": 1,
+    "nombre": "Pedrito perez",
+    "documentoIdentificacion": "1234567890",
+    "telefono": "1234567890",
+    "correo": "correo5@gmail.com"
+  }
+}
+
+### Obtiene vehiculo por placa
+GET http://localhost:8080/api/vehiculo/placa/{{placa}}
+
+### Lista vehiculos por documento del dueño
+GET http://localhost:8080/api/vehiculo/documento/{{documento}}
+
+###
+DELETE http://localhost:8080/api/vehiculo/{{id}}
+
+###
+PUT http://localhost:8080/api/estancia
+
+### Crear una estancia
+//Crea una entrada al parqueadero, devuelve el id creado, la fecha y hora de entrada generada por el sistema.
+//es posible pasar el cuerpo del vehiculo sin id para que sea creado, tambien es posible pasar el cuerpo del dueño dentro de vehiculo sin id para que tambien sea creado
+POST http://localhost:8080/api/estancia/entrada
+Content-Type: application/json
+
+{
+  "vehiculo": {
+    "id": 1
+  }
+}
+### Genera la salida de la estancia
+//recibe el id de la estancia y devuelve la estancia con la fecha de salida (gen. por el sistema) y los minutos de que duro la estancia
+POST http://localhost:8080/api/estancia/salida/{{id}}
+
+### Borra la estancia
+// en teoria no deberia eliminarse para que sirva de registro.
+DELETE http://localhost:8080/api/estancia/{{id}}
+
+
+### Lista todas las estancias
+// Tiene diferentes "query params (?valor=query&)" para la filtrar la busqueda, ninguno es obligatorio, *valor : valor por defecto
+//fe: fecha entrada, fs: fecha salida , ||: uno de los dos
+//&pag=0...N(*0) #Pagina a traer
+//&tam=1...N(*20) # tamaño de la pagina
+//&ordenarPor=(*fe || fs)
+//&tOrden=(ASC||*DESC)
+//&(placa=aaa123 || documento=1234567890)
+//&estancia=(abiertas || completas |*todas) #abiertas: no tienen salida, completas: se genero salida
+//&fs=gt,yyyy-mm-ddTHH:MM:SS.ssss,lt,yyyy-mm-ddTHH:MM:SS.ssss #"lt" menor que, "gt" mayor que, es posible solo uno o ambos
+//&fe=lt,yyyy-mm-ddTHH:MM:SS.ssss
+//&fs=gt,yyyy-mm-dd # es posible no indicar el tiempo, el sistema lo convertira a: yyyy-mm-ddT00:00:00.0000
+GET http://localhost:8080/api/estancia
