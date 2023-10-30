@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/*.jar --spring.profiles.active=application.properties
+web: java $JAVA_OPTS -jar build/libs/*.jar --spring.profiles.active=application.properties
