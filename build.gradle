@@ -36,6 +36,6 @@ tasks.named('test') {
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'co/edu/iudigital/parqueadero/ParqueaderoApplication.java'
+		attributes 'Main-Class': 'co.edu.iudigital.parqueadero.ParqueaderoApplication'
 	}
 }
