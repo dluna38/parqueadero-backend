@@ -3,7 +3,6 @@ package co.edu.iudigital.parqueadero.controllers;
 import co.edu.iudigital.parqueadero.controllers.custom.response.PageResponse;
 import co.edu.iudigital.parqueadero.models.Vehiculo;
 import co.edu.iudigital.parqueadero.repositories.VehiculoRepository;
-import co.edu.iudigital.parqueadero.repositories.projections.VehiculoSimple;
 import co.edu.iudigital.parqueadero.services.VehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
