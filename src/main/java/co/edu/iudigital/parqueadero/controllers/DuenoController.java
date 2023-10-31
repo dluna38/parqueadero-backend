@@ -1,5 +1,6 @@
 package co.edu.iudigital.parqueadero.controllers;
 
+import co.edu.iudigital.parqueadero.controllers.custom.response.PageResponse;
 import co.edu.iudigital.parqueadero.models.Dueno;
 import co.edu.iudigital.parqueadero.services.DuenoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/dueno")
@@ -20,8 +22,8 @@ public class DuenoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Dueno>> getAllDuenos(){
-        return ResponseEntity.ok(duenoService.getAllDuenos());
+    public ResponseEntity<PageResponse<Dueno>> getAllDuenos(Map<String,String> params){
+        return ResponseEntity.ok(duenoService.getAllDuenos(params));
     }
 
     @GetMapping("/documento/{documento}")

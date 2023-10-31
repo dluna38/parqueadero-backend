@@ -1,13 +1,16 @@
 package co.edu.iudigital.parqueadero.services;
 
 import co.edu.iudigital.parqueadero.exceptions.FieldRequiredException;
+import co.edu.iudigital.parqueadero.exceptions.ResourceNotFoundException;
 import co.edu.iudigital.parqueadero.exceptions.ValidationException;
 import co.edu.iudigital.parqueadero.models.Marca;
 import co.edu.iudigital.parqueadero.repositories.MarcaRepository;
+import co.edu.iudigital.parqueadero.utils.UtilString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MarcaService {
@@ -31,7 +34,9 @@ public class MarcaService {
     public Marca updateMarca(Marca marca){
         validateId(marca.getId());
         validateMarca(marca);
-        return marcaRepository.save(marca);
+        Optional<Marca> marcaDb = marcaRepository.findById(marca.getId());
+        marcaDb.orElseThrow(()-> new ResourceNotFoundException("tipo vehiculo")).setNombre(marca.getNombre());
+        return marcaRepository.save(marcaDb.get());
     }
 
     public void deleteMarca(Short id){
@@ -43,10 +48,8 @@ public class MarcaService {
         return marcaRepository.existsById(id);
     }
     private void validateMarca(Marca marca){
-        //TODO validar si la marca ya existe
-        if(marca.getNombre() == null || marca.getNombre().isEmpty()){
-            throw new FieldRequiredException("nombre");
-        }
+        UtilString.validateRequiredField("nombre",marca.getNombre());
+
         if(marcaRepository.existsByNombreContainsIgnoreCase(marca.getNombre())){
             throw new ValidationException("nombre","ya existe");
         }

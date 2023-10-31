@@ -1,5 +1,7 @@
 package co.edu.iudigital.parqueadero.utils;
 
+import co.edu.iudigital.parqueadero.exceptions.FieldRequiredException;
+
 public class UtilString {
     private static final String EMAIL_REGEX="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
     private UtilString() {
@@ -20,5 +22,11 @@ public class UtilString {
     }
     public static String rodearDePorcentaje(String cadena){
         return "%"+cadena+"%";
+    }
+
+    public static void validateRequiredField(String field,String s){
+        if(stringIsEmptyOrNull(s)){
+            throw new FieldRequiredException(field);
+        }
     }
 }

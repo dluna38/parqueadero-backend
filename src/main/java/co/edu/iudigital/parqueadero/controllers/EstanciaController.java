@@ -1,5 +1,6 @@
 package co.edu.iudigital.parqueadero.controllers;
 
+import co.edu.iudigital.parqueadero.controllers.custom.response.PageResponse;
 import co.edu.iudigital.parqueadero.models.Estancia;
 import co.edu.iudigital.parqueadero.services.EstanciaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class EstanciaController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Estancia>> getAllEstancias(@RequestParam Map<String,String> paramsEstancia){
+    public ResponseEntity<PageResponse<Estancia>> getAllEstancias(@RequestParam Map<String,String> paramsEstancia){
         return ResponseEntity.ok(estanciaService.getAllEstancias(paramsEstancia));
     }
 
@@ -36,8 +37,8 @@ public class EstanciaController {
     }
 
     @PutMapping
-    public ResponseEntity<Estancia> updateEstancia(@RequestBody Estancia estancia){
-        return ResponseEntity.ok(estanciaService.updateEstancia(estancia));
+    public ResponseEntity<String> updateEstancia(@RequestBody Estancia estancia){
+        return new ResponseEntity<>("No se soporta la operación",HttpStatus.BAD_REQUEST);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEstancia(@PathVariable Long id){

@@ -1,5 +1,6 @@
 package co.edu.iudigital.parqueadero.services;
 
+import co.edu.iudigital.parqueadero.controllers.custom.response.PageResponse;
 import co.edu.iudigital.parqueadero.exceptions.FieldRequiredException;
 import co.edu.iudigital.parqueadero.exceptions.ResourceNotFoundException;
 import co.edu.iudigital.parqueadero.exceptions.ValidationException;
@@ -57,22 +58,21 @@ public class EstanciaService {
 
         return estanciaRepository.save(estanciaDB.get());
     }
-    public Page<Estancia> getAllEstancias(Map<String, String> paramsEstancia) {
+    public PageResponse<Estancia> getAllEstancias(Map<String, String> paramsEstancia) {
         UtilParamEstancia utilParamEstancia = new UtilParamEstancia();
 
-        PageRequest pageRequest = UtilParams.getPageRequestFromMapParams(paramsEstancia,"fechaEntrada");
+        Map<String,String> equivalenciasSort = Map.of("fe","fechaEntrada","fs","fechaSalida");
+
+
+        PageRequest pageRequest = UtilParams.getPageRequestFromMapParams(paramsEstancia,
+                "fechaEntrada",equivalenciasSort);
         try {
-            return estanciaRepository.findAll(utilParamEstancia.getSpecificationFilter(paramsEstancia),pageRequest);
+            return new PageResponse<>(estanciaRepository.findAll(utilParamEstancia.getSpecificationFilter(paramsEstancia),pageRequest));
         } catch (PropertyReferenceException e) {
             throw new ValidationException("ordenarPor","No se encontro el campo");
         }
     }
 
-    public Estancia updateEstancia(Estancia estancia){
-        validateId(estancia.getId());
-        validateEstancia(estancia);
-        return estanciaRepository.save(estancia);
-    }
 
     public void deleteEstancia(Long id){
         validateId(id);

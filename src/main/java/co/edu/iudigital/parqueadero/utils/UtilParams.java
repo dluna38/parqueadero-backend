@@ -10,7 +10,7 @@ public class UtilParams {
     private  UtilParams() {
     }
 
-    public static PageRequest getPageRequestFromMapParams(Map<String,String> params,String defaultFieldSort) throws PropertyReferenceException {
+    public static PageRequest getPageRequestFromMapParams(Map<String,String> params,String defaultFieldSort,Map<String,String> equivalenciasSort) throws PropertyReferenceException {
         int page = 0;
         int size = 20;
         String sortBy=defaultFieldSort;
@@ -30,16 +30,9 @@ public class UtilParams {
                 System.out.println(e.getMessage());
             }
         }
-        if(params.containsKey("ordenarPor")){
-            try {
-                if(params.get("ordenarPor").equalsIgnoreCase("fe")){
-                    sortBy = params.get("fechaEntrada");
-                }else if(params.get("ordenarPor").equalsIgnoreCase("fs")){
-                    sortBy = params.get("fechaSalida");
-                }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+        if(equivalenciasSort !=null){
+            String getSort = getSortBy(equivalenciasSort,params);
+            if(getSort!=null) sortBy = getSort;
         }
         if(params.containsKey("tOrden")){
             try {
@@ -51,7 +44,14 @@ public class UtilParams {
             }
         }
         PageRequest request = PageRequest.of(page,size,Sort.by(direction,sortBy));
-        System.out.printf("PAGE REQUEST: page: %d | size: %d | sort: %s %n", request.getPageNumber(),request.getPageSize(),request.getSort());
+        //System.out.printf("PAGE REQUEST: page: %d | size: %d | sort: %s %n", request.getPageNumber(),request.getPageSize(),request.getSort());
         return request;
+    }
+
+    public static String getSortBy(Map<String,String> equivalencias,Map<String,String> params){
+        if(params.containsKey("ordenarPor")){
+            return equivalencias.get(params.get("ordenarPor").toLowerCase());
+        }
+        return null;
     }
 }

@@ -72,7 +72,6 @@ public class UtilParamEstancia {
         return cb.and(predicates.toArray(new Predicate[0]));
     }
     private Map<String, LocalDateTime> getMapFechaFilter(String cadenaCompuesta){
-        //TODO make it work with yyyy-mm-dd and yyyy-mm-ddTHH:MM:SS.ssss
         Map<String,LocalDateTime> filterFechasMap = new HashMap<>();
         try {
             String[] separado = cadenaCompuesta.split(",");

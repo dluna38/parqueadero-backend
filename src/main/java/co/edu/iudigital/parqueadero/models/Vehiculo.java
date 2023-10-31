@@ -1,7 +1,5 @@
 package co.edu.iudigital.parqueadero.models;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,6 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+@ToString
 public class Vehiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

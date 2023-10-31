@@ -1,16 +1,18 @@
 package co.edu.iudigital.parqueadero.controllers;
 
+import co.edu.iudigital.parqueadero.controllers.custom.response.PageResponse;
 import co.edu.iudigital.parqueadero.models.Vehiculo;
 import co.edu.iudigital.parqueadero.repositories.VehiculoRepository;
+import co.edu.iudigital.parqueadero.repositories.projections.VehiculoSimple;
 import co.edu.iudigital.parqueadero.services.VehiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/vehiculo")
@@ -27,8 +29,8 @@ public class VehiculoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Vehiculo>> getAllVehiculos(){
-        return ResponseEntity.ok(vehiculoService.getAllVehiculos());
+    public ResponseEntity<PageResponse<Vehiculo>> getAllVehiculos(@RequestParam Map<String,String> params){
+        return ResponseEntity.ok(vehiculoService.getAllVehiculos(params));
     }
     @GetMapping("/placa/{placa}")
     public ResponseEntity<Vehiculo> getFindByPlaca(@PathVariable String placa){
@@ -53,7 +55,7 @@ public class VehiculoController {
     }
 
     @GetMapping("/test")
-    public String testController(){
-        return env.getProperty("TEST_VARIABLE");
+    public void testController(){
+        vehiculoService.customJpa();
     }
 }
