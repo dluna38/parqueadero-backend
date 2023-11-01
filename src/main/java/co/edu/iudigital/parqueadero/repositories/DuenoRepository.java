@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface DuenoRepository extends JpaRepository<Dueno,Long> {
 
     boolean existsById(long id);
-    boolean existsByDocumentoIdentificacion(String documento);
+    boolean existsByDocumentoIdentificacionIgnoreCase(String documento);
 
-    Optional<Dueno> findByDocumentoIdentificacion(String documento);
+    Optional<Dueno> findByDocumentoIdentificacionIgnoreCase(String documento);
 }

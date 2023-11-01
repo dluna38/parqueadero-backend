@@ -82,7 +82,7 @@ public class DuenoService {
     }
     private void validateDocumento(String documento){
         UtilString.validateRequiredField("documento",documento);
-        if(duenoRepository.existsByDocumentoIdentificacion(documento)){
+        if(duenoRepository.existsByDocumentoIdentificacionIgnoreCase(documento)){
             throw new ValidationException("documento de identificacion","Ya se encuentra registrado");
         }
 
@@ -106,9 +106,9 @@ public class DuenoService {
         return duenoRepository.existsById(id);
     }
     public boolean existByDocumento(String documento){
-        return duenoRepository.existsByDocumentoIdentificacion(documento);
+        return duenoRepository.existsByDocumentoIdentificacionIgnoreCase(documento);
     }
     public Dueno findByDocumento(String documento){
-        return duenoRepository.findByDocumentoIdentificacion(documento).orElseThrow(()-> new ResourceNotFoundException("dueño"));
+        return duenoRepository.findByDocumentoIdentificacionIgnoreCase(documento).orElseThrow(()-> new ResourceNotFoundException("dueño"));
     }
 }

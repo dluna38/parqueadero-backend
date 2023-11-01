@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface VehiculoRepository extends JpaRepository<Vehiculo,Long> {
 
-    Optional<Vehiculo> findByPlaca(String placa);
+    Optional<Vehiculo> findByPlacaIgnoreCase(String placa);
     List<Vehiculo> findAllByDueno_DocumentoIdentificacion(String documento);
 }

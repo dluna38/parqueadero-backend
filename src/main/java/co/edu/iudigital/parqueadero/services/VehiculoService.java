@@ -97,13 +97,13 @@ public class VehiculoService {
     }
 
     public Vehiculo findByPlaca(String placa) {
-        return vehiculoRepository.findByPlaca(placa).orElseThrow(()->new ResourceNotFoundException(("vehiculo")));
+        return vehiculoRepository.findByPlacaIgnoreCase(placa).orElseThrow(()->new ResourceNotFoundException(("vehiculo")));
     }
     public Vehiculo findById(Long id) {
         return vehiculoRepository.findById(id).orElseThrow(()->new ResourceNotFoundException(("vehiculo")));
     }
     public List<Vehiculo> findAllByDocumento(String documento) {
-        return vehiculoRepository.findAllByDueno_DocumentoIdentificacion(documento);
+        return vehiculoRepository.findAllByDueno_DocumentoIdentificacion(documento.toUpperCase());
     }
 
     private void validateVehiculo(Vehiculo vehiculo){
@@ -127,7 +127,7 @@ public class VehiculoService {
 
         }*/
         UtilString.validateRequiredField("placa",placa);
-        if(vehiculoRepository.findByPlaca(placa).isPresent()){
+        if(vehiculoRepository.findByPlacaIgnoreCase(placa).isPresent()){
             throw new ValidationException("placa","placa ya existe");
         }
     }
