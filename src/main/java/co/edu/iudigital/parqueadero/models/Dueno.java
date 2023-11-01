@@ -12,7 +12,8 @@ import lombok.*;
 @Builder
 public class Dueno {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "dueno_gen")
+    @SequenceGenerator(name = "dueno_gen",sequenceName = "dueno_seq",allocationSize = 20)
     private Long id;
     @Column(nullable = false,length = 150)
     private String nombre;

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @Entity
 @Table(name = "estancia")
@@ -15,7 +14,8 @@ import java.time.ZoneId;
 @Builder
 public class Estancia {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "estancia_gen")
+    @SequenceGenerator(name = "estancia_gen",sequenceName = "estancia_seq",allocationSize = 20)
     private Long id;
     @Column(name = "fecha_entrada",nullable = false)
     private LocalDateTime fechaEntrada;

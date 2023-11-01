@@ -13,7 +13,8 @@ import lombok.*;
 @ToString
 public class Vehiculo {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "vehiculo_gen")
+    @SequenceGenerator(name = "vehiculo_gen",sequenceName = "vehiculo_seq",allocationSize = 20)
     private Long id;
     @Column(nullable = false,unique = true,length = 15)
     private String placa;

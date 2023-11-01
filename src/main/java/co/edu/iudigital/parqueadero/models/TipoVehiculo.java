@@ -13,7 +13,8 @@ import lombok.*;
 public class TipoVehiculo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "t_vehiculo_gen")
+    @SequenceGenerator(name = "t_vehiculo_gen",sequenceName = "tvehiculo_seq",allocationSize = 20)
     private Short id;
     @Column(nullable = false,length = 100)
     private String tipo;

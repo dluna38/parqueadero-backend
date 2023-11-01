@@ -12,7 +12,8 @@ import lombok.*;
 @Builder
 public class Marca {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "marca_gen")
+    @SequenceGenerator(name = "marca_gen",sequenceName = "marca_seq",allocationSize = 20)
     private Short id;
     @Column(nullable = false,length = 150)
     private String nombre;
