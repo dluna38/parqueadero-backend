@@ -24,7 +24,7 @@ public class Vehiculo {
     @ManyToOne
     @JoinColumn(name = "fk_marca",nullable = false,foreignKey = @ForeignKey(name = "FK_vehiculo_marca"))
     private Marca marca;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_dueno",nullable = false,foreignKey = @ForeignKey(name = "FK_vehiculo_dueno"))
     private Dueno dueno;
 
