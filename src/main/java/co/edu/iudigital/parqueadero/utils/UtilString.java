@@ -3,7 +3,7 @@ package co.edu.iudigital.parqueadero.utils;
 import co.edu.iudigital.parqueadero.exceptions.FieldRequiredException;
 
 public class UtilString {
-    private static final String EMAIL_REGEX="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$";
+    private static final String EMAIL_REGEX="^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
     private UtilString() {
     }
 

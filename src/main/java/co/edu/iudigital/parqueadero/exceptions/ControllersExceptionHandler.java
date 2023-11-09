@@ -26,6 +26,7 @@ public class ControllersExceptionHandler {
     public ResponseEntity<Object> validationExceptionResponse(ValidationException ex){
         return ex.generateResponse();
     }
+
     @ExceptionHandler(PSQLException.class)
     public ResponseEntity<Object> sqlExceptionResponse(PSQLException ex){
         return new DatabaseHandleExceptions(ex).generateResponse();

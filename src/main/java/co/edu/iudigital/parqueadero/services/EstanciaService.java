@@ -4,7 +4,6 @@ import co.edu.iudigital.parqueadero.controllers.custom.response.PageResponse;
 import co.edu.iudigital.parqueadero.exceptions.FieldRequiredException;
 import co.edu.iudigital.parqueadero.exceptions.ResourceNotFoundException;
 import co.edu.iudigital.parqueadero.exceptions.ValidationException;
-import co.edu.iudigital.parqueadero.models.Celda;
 import co.edu.iudigital.parqueadero.models.Estancia;
 import co.edu.iudigital.parqueadero.repositories.EstanciaRepository;
 import co.edu.iudigital.parqueadero.utils.UtilParamEstancia;
@@ -55,7 +54,7 @@ public class EstanciaService {
 
         long totalMinutes = ChronoUnit.MINUTES.between(
                 estanciaDB.get().getFechaEntrada(),estanciaDB.get().getFechaSalida());
-        estanciaDB.get().setMinutosTotales(totalMinutes <=0 ? 1 : totalMinutes);
+        estanciaDB.get().setMinutosTotales(totalMinutes <= 0 ? 1 : totalMinutes);
 
         return estanciaRepository.save(estanciaDB.get());
     }
@@ -68,7 +67,6 @@ public class EstanciaService {
         PageRequest pageRequest = UtilParams.getPageRequestFromMapParams(paramsEstancia,
                 "fechaEntrada",equivalenciasSort);
         try {
-            //return new PageResponse<>(estanciaRepository.findAll(utilParamEstancia.getSpecificationFilter(paramsEstancia),pageRequest));
             return new PageResponse<>(estanciaRepository.findAllCustom(utilParamEstancia.getSpecificationFilter(paramsEstancia),pageRequest));
         } catch (PropertyReferenceException e) {
             throw new ValidationException("ordenarPor","No se encontro el campo");
