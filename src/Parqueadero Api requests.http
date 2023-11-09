@@ -114,7 +114,7 @@ POST http://localhost:8080/api/vehiculo
 Content-Type: application/json
 
 {
-  "placa": "aaa123",
+  "placa": "aaa125",
   "tipoVehiculo": {
     "id": 1
   },
@@ -124,9 +124,9 @@ Content-Type: application/json
   "dueno": {
     "id": 1,
     "nombre": "Pedrito perez",
-    "documentoIdentificacion": "1234567890",
-    "telefono": "1234567890",
-    "correo": "correo5@gmail.com"
+    "documentoIdentificacion": "1234567894",
+    "telefono": "1234567894",
+    "correo": "correo4@gmail.com"
   }
 }
 
@@ -150,7 +150,10 @@ Content-Type: application/json
 
 {
   "vehiculo": {
-    "id": 1
+    "id": 2
+  },
+  "celda": {
+    "id": 2
   }
 }
 ### Genera la salida de la estancia
@@ -175,3 +178,18 @@ DELETE http://localhost:8080/api/estancia/{{id}}
 //&fe=lt,yyyy-mm-ddTHH:MM:SS.ssss
 //&fs=gt,yyyy-mm-dd # es posible no indicar el tiempo, el sistema lo convertira a: yyyy-mm-ddT00:00:00.0000
 GET http://localhost:8080/api/estancia
+
+
+###
+POST http://localhost:8080/api/celda
+Content-Type: application/json
+
+{
+  "celda": "a2"
+}
+
+###
+GET http://localhost:8080/api/celda/ocupadas
+
+###
+GET http://localhost:8080/api/celda

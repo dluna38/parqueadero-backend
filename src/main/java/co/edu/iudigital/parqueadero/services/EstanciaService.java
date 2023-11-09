@@ -4,36 +4,32 @@ import co.edu.iudigital.parqueadero.controllers.custom.response.PageResponse;
 import co.edu.iudigital.parqueadero.exceptions.FieldRequiredException;
 import co.edu.iudigital.parqueadero.exceptions.ResourceNotFoundException;
 import co.edu.iudigital.parqueadero.exceptions.ValidationException;
-import co.edu.iudigital.parqueadero.models.Dueno;
+import co.edu.iudigital.parqueadero.models.Celda;
 import co.edu.iudigital.parqueadero.models.Estancia;
-import co.edu.iudigital.parqueadero.models.Vehiculo;
 import co.edu.iudigital.parqueadero.repositories.EstanciaRepository;
 import co.edu.iudigital.parqueadero.utils.UtilParamEstancia;
 import co.edu.iudigital.parqueadero.utils.UtilParams;
-import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.regex.PatternSyntaxException;
 
 @Service
 public class EstanciaService {
     private final EstanciaRepository estanciaRepository;
     private final VehiculoService vehiculoService;
 
+    private final CeldaService celdaService;
     @Autowired
-    public EstanciaService(EstanciaRepository estanciaRepository, VehiculoService vehiculoService) {
+    public EstanciaService(EstanciaRepository estanciaRepository, VehiculoService vehiculoService, CeldaService celdaService) {
         this.estanciaRepository = estanciaRepository;
         this.vehiculoService = vehiculoService;
+        this.celdaService = celdaService;
     }
 
     @Transactional
@@ -43,18 +39,23 @@ public class EstanciaService {
         if(estancia.getVehiculo().getId() == null){
             estancia.setVehiculo(vehiculoService.saveVehiculo(estancia.getVehiculo()));
         }
-
+        celdaService.ocuparCeldaById(estancia.getCelda().getId());
         return estanciaRepository.save(estancia);
     }
+    @Transactional
     public Estancia saveEstanciaSalida(Long id) {
         validateId(id);
         Optional<Estancia> estanciaDB = estanciaRepository.findById(id);
         if(estanciaDB.isEmpty()) throw new ResourceNotFoundException("Estancia");
         if(estanciaDB.get().getFechaSalida() != null) throw new ValidationException("fecha salida","La estancia ya tienen una fecha salida");
 
+
+        celdaService.desocuparCeldaById(estanciaDB.get().getCelda().getId());
         estanciaDB.get().setFechaSalida(LocalDateTime.now());
-        estanciaDB.get().setMinutosTotales(ChronoUnit.MINUTES.between(
-                estanciaDB.get().getFechaEntrada(),estanciaDB.get().getFechaSalida()));
+
+        long totalMinutes = ChronoUnit.MINUTES.between(
+                estanciaDB.get().getFechaEntrada(),estanciaDB.get().getFechaSalida());
+        estanciaDB.get().setMinutosTotales(totalMinutes <=0 ? 1 : totalMinutes);
 
         return estanciaRepository.save(estanciaDB.get());
     }
@@ -67,7 +68,8 @@ public class EstanciaService {
         PageRequest pageRequest = UtilParams.getPageRequestFromMapParams(paramsEstancia,
                 "fechaEntrada",equivalenciasSort);
         try {
-            return new PageResponse<>(estanciaRepository.findAll(utilParamEstancia.getSpecificationFilter(paramsEstancia),pageRequest));
+            //return new PageResponse<>(estanciaRepository.findAll(utilParamEstancia.getSpecificationFilter(paramsEstancia),pageRequest));
+            return new PageResponse<>(estanciaRepository.findAllCustom(utilParamEstancia.getSpecificationFilter(paramsEstancia),pageRequest));
         } catch (PropertyReferenceException e) {
             throw new ValidationException("ordenarPor","No se encontro el campo");
         }
@@ -83,6 +85,10 @@ public class EstanciaService {
         if(estancia.getVehiculo() == null){
             throw new FieldRequiredException("Vehiculo");
         }
+        if(estancia.getCelda() == null){
+            throw new FieldRequiredException("Celda");
+        }
+
         if(estancia.getVehiculo().getId() != null) {
             if(!vehiculoService.existById(estancia.getVehiculo().getId())) {
                 throw new ResourceNotFoundException("vehiculo");

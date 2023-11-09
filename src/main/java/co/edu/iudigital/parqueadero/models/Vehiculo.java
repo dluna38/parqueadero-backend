@@ -18,10 +18,10 @@ public class Vehiculo {
     private Long id;
     @Column(nullable = false,unique = true,length = 15)
     private String placa;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_tipo_vehiculo",nullable = false,foreignKey = @ForeignKey(name = "FK_vehiculo_tipo"))
     private TipoVehiculo tipoVehiculo;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_marca",nullable = false,foreignKey = @ForeignKey(name = "FK_vehiculo_marca"))
     private Marca marca;
     @ManyToOne(fetch = FetchType.LAZY)

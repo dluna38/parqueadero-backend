@@ -23,9 +23,13 @@ public class Estancia {
     private LocalDateTime fechaSalida;
     @Column(name = "minutos_totales")
     private Long minutosTotales;
-    @ManyToOne
-    @JoinColumn(name = "fk_vehiculo", nullable = false,foreignKey = @ForeignKey(name = "FK_movimiento_vehiculo"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_vehiculo", nullable = false,foreignKey = @ForeignKey(name = "FK_estancia_vehiculo"))
     private Vehiculo vehiculo;
+
+    @ManyToOne
+    @JoinColumn(name ="fk_celda",nullable = false,foreignKey = @ForeignKey(name = "Fk_celda_estancia"))
+    private Celda celda;
 
     @PrePersist
     public void prePersistEstancia(){
