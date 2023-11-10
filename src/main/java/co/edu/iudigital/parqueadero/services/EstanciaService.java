@@ -54,10 +54,13 @@ public class EstanciaService {
 
         long totalMinutes = ChronoUnit.MINUTES.between(
                 estanciaDB.get().getFechaEntrada(),estanciaDB.get().getFechaSalida());
+
         estanciaDB.get().setMinutosTotales(totalMinutes <= 0 ? 1 : totalMinutes);
 
         return estanciaRepository.save(estanciaDB.get());
     }
+
+
     public PageResponse<Estancia> getAllEstancias(Map<String, String> paramsEstancia) {
         UtilParamEstancia utilParamEstancia = new UtilParamEstancia();
 
@@ -108,5 +111,8 @@ public class EstanciaService {
         }
     }
 
+    public Optional<Estancia> findById(Long id){
+        return estanciaRepository.findById(id);
+    }
 
 }
