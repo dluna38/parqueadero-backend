@@ -1,5 +1,6 @@
 package co.edu.iudigital.parqueadero.repositories;
 
+import co.edu.iudigital.parqueadero.controllers.custom.response.PageResponse;
 import co.edu.iudigital.parqueadero.models.Estancia;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,7 @@ public interface EstanciaRepository extends JpaRepository<Estancia,Long>, JpaSpe
 
     @Query("select e from Estancia e join FETCH e.vehiculo")
     Page<Estancia> findAllCustom(Specification<Estancia> specification, Pageable pageable);
+
+    @Query("select e from Estancia e join FETCH e.vehiculo join fetch e.vehiculo.dueno join fetch e.vehiculo.marca join fetch e.vehiculo.tipoVehiculo")
+    PageResponse<Estancia> findByIdDetail(Long id);
 }

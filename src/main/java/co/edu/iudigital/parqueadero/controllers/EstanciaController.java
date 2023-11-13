@@ -23,8 +23,13 @@ public class EstanciaController {
     }
 
     @GetMapping
-    public ResponseEntity<PageResponse<Estancia>> getAllEstancias(@RequestParam Map<String,String> paramsEstancia){
+    public ResponseEntity<PageResponse<Estancia>> getAllEstancias(@RequestParam(required = false) Map<String,String> paramsEstancia){
         return ResponseEntity.ok(estanciaService.getAllEstancias(paramsEstancia));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PageResponse<Estancia>> getDetailEstancia(@PathVariable Long id){
+        return ResponseEntity.ok(estanciaService.getDetailEstancia(id));
     }
 
     @PostMapping("/entrada")

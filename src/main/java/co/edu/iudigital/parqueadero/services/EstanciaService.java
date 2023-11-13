@@ -115,4 +115,7 @@ public class EstanciaService {
         return estanciaRepository.findById(id);
     }
 
+    public PageResponse<Estancia> getDetailEstancia(Long id) {
+        return estanciaRepository.findByIdDetail(id);
+    }
 }

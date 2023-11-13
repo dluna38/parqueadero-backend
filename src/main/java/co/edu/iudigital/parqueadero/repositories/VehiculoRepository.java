@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface VehiculoRepository extends JpaRepository<Vehiculo,Long> {
 
-    @Query("select v from Vehiculo v join fetch v.dueno where v.placa = upper(:placa) ")
+    @Query("select v from Vehiculo v join fetch v.dueno join fetch v.marca join fetch v.tipoVehiculo where v.placa = upper(:placa) ")
     Optional<Vehiculo> findByPlacaIgnoreCase(String placa);
     @Query("select v from Vehiculo v join fetch v.dueno where v.dueno.documentoIdentificacion = :documento")
     List<Vehiculo> findAllByDueno_DocumentoIdentificacion(String documento);
