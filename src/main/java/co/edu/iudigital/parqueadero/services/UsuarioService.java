@@ -1,17 +1,13 @@
 package co.edu.iudigital.parqueadero.services;
 
-import co.edu.iudigital.parqueadero.controllers.custom.requests.LogInRequest;
-import co.edu.iudigital.parqueadero.controllers.custom.response.TokenResponse;
-import co.edu.iudigital.parqueadero.exceptions.ResourceNotFoundException;
 import co.edu.iudigital.parqueadero.exceptions.ValidationException;
 import co.edu.iudigital.parqueadero.models.Usuario;
 import co.edu.iudigital.parqueadero.repositories.UsuarioRepository;
-import co.edu.iudigital.parqueadero.security.jwt.JwtService;
 import co.edu.iudigital.parqueadero.utils.UtilString;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+
 @Service
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
