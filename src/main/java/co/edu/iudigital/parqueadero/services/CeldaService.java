@@ -49,11 +49,21 @@ public class CeldaService {
         return celdaRepository.findById(id);
     }
     private void validateCelda(Celda celda) {
-        if(UtilString.stringIsEmptyOrNull(celda.getCelda())){
-            throw new FieldRequiredException("celda nombre");
+        UtilString.validateRequiredField("celda",celda.getCelda());
+        if(celdaRepository.findByCeldaIgnoreCase(celda.getCelda()).isPresent()){
+            throw new ValidationException("celda","ya existe");
         }
     }
+    public Celda updateCelda(Celda celda) {
+        if(celda.getId() == null){
+            throw new FieldRequiredException("id");
+        }
+        validateCelda(celda);
+        Celda celdaDB = celdaRepository.findById(celda.getId()).orElseThrow(()-> new ResourceNotFoundException("celda"));
+        celdaDB.setCelda(celda.getCelda());
 
+        return celdaRepository.save(celdaDB);
+    }
     public List<Celda> getAllCeldas() {
         return celdaRepository.findAll();
     }
@@ -64,5 +74,13 @@ public class CeldaService {
 
     public List<Celda> getAllCeldasLibres() {
         return celdaRepository.findAllByOcupadaIsFalse();
+    }
+
+
+    public void deleteCelda(Short id) {
+        if(id == null){
+            throw new FieldRequiredException("id");
+        }
+        celdaRepository.deleteById(id);
     }
 }

@@ -35,4 +35,14 @@ public class CeldaController {
     public ResponseEntity<List<Celda>> getAllCeldasLibres(){
         return ResponseEntity.ok(celdaService.getAllCeldasLibres());
     }
+    @PutMapping
+    public ResponseEntity<Celda> updateCelda(@RequestBody Celda celda){
+        return ResponseEntity.ok(celdaService.updateCelda(celda));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCelda(@PathVariable Short id){
+        celdaService.deleteCelda(id);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -37,4 +37,6 @@ public class AuthService {
     public TokenResponse registerUsuario(Usuario usuario){
         return new TokenResponse(jwtService.generateToken(usuarioService.saveUsuario(usuario)));
     }
+
+
 }

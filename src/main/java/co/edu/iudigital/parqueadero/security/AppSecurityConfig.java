@@ -22,7 +22,7 @@ public class AppSecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> usuarioRepository.findUsuarioByCorreo(username).orElseThrow(()-> new ResourceNotFoundException("usuario"));
+        return username -> usuarioRepository.findUsuarioByCorreoIgnoreCase(username).orElseThrow(()-> new ResourceNotFoundException("usuario"));
     }
 
     @Bean

@@ -17,7 +17,7 @@ public class Celda {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "celda_gen")
     @SequenceGenerator(name = "celda_gen",sequenceName = "celda_seq",allocationSize = 20)
     Short id;
-    @Column(length = 15,nullable = true,unique = true)
+    @Column(length = 15,nullable = false,unique = true)
     String celda;
     @Column(columnDefinition = "boolean default false")
     boolean ocupada;

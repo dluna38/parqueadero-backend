@@ -35,5 +35,13 @@ public class UsuarioService {
         if(!UtilString.isEmailValid(usuario.getCorreo())){
             throw new ValidationException("correo","no es un correo valido");
         }
+        if(usuarioRepository.findUsuarioByCorreoIgnoreCase(usuario.getCorreo()).isPresent()){
+            throw new ValidationException("correo","ya existe");
+        }
+
+        if(usuarioRepository.findUsuarioByDocumentoIdentidadIgnoreCase(usuario.getDocumentoIdentidad()).isPresent()){
+            throw new ValidationException("Documento de identidad","ya existe");
+        }
     }
+
 }

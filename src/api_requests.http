@@ -180,16 +180,25 @@ DELETE http://localhost:8080/api/estancia/{{id}}
 GET http://localhost:8080/api/estancia
 
 
-###
+### Crea una celda
 POST http://localhost:8080/api/celda
 Content-Type: application/json
 
 {
   "celda": "a2"
 }
+### Edita una celda
+PUT http://localhost:8080/api/celda
+Content-Type: application/json
 
-###
+{
+  "celda": "a2"
+}
+### Obtiene celdas ocupadas
 GET http://localhost:8080/api/celda/ocupadas
 
-###
+### Obtiene celdas libres
+GET http://localhost:8080/api/celda/libres
+
+### Obtiene todas las celdas
 GET http://localhost:8080/api/celda
