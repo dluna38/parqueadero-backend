@@ -18,8 +18,6 @@ spring.datasource.url=${DB_URL}
 spring.datasource.username=${DB_USER}
 spring.datasource.password=${DB_PASS}
 ```
-En caso de no tener las tablas creadas, agregar también lo siguiente para que hibernate las genere:
-`spring.jpa.hibernate.ddl-auto=update`
 
 
 ## Ejecución
