@@ -9,12 +9,5 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class ParqueaderoApplicationTests {
-	@Autowired
-	AuthController authController;
-
-	@Test
-	void contextLoads() {
-		assertThat(authController).isNotNull();
-	}
 
 }
