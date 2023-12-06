@@ -10,6 +10,7 @@ import co.edu.iudigital.parqueadero.repositories.PagoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,8 +32,8 @@ public class PagoService {
 
         Estancia estancia = estanciaService.findById(pago.getEstancia().getId()).orElseThrow(()-> new ResourceNotFoundException("Estancia"));
 
-        Long idPagoBD = pagoRepository.findPagoByEstanciaId(estancia.getId());
-        if(idPagoBD != null) throw new ValidationException("pago","Ya existe un pago para esa estancia, pago id existente: "+idPagoBD);
+        Optional<Pago> idPagoBD = pagoRepository.findPagoByEstanciaId(estancia.getId());
+        if(idPagoBD.isPresent()) throw new ValidationException("pago","Ya existe un pago para esa estancia, pago id existente: "+idPagoBD);
 
         if(estancia.getMinutosTotales() == null){
             estancia = estanciaService.saveEstanciaSalida(estancia.getId());
@@ -58,4 +59,13 @@ public class PagoService {
         }
 
     }
+
+    public Pago getPagoEstanciaById(Long id) {
+        return pagoRepository.findPagoByEstanciaId(id).orElseThrow(()->new ResourceNotFoundException("pago"));
+    }
+
+    public List<Pago> getAllPago() {
+        return pagoRepository.findAll();
+    }
+
 }

@@ -26,7 +26,6 @@ public class UtilParamEstancia {
             final String estanciaCompleta = "completas";
             final String estanciaAbierta = "abiertas";
 
-
             if(filtros.containsKey("estancia")){
                 if(filtros.get("estancia").equalsIgnoreCase(estanciaCompleta)){
                     predicates.add(cb.isNotNull(root.get(fechaSalida)));
@@ -34,7 +33,6 @@ public class UtilParamEstancia {
                     predicates.add(cb.isNull(root.get(fechaSalida)));
                 }
             }
-
 
             if(filtros.containsKey(placa) || filtros.containsKey(documento)){
                 Join<Estancia, Vehiculo> vehiculoJoin = root.join("vehiculo", JoinType.INNER);
@@ -55,7 +53,8 @@ public class UtilParamEstancia {
                 //gt,yyyy-mm-dd,lt,yyyy-mm-dd
                 predicates.add(getPredicatesFechasFilter(root,cb,fechaSalida,getMapFechaFilter(filtros.get("fs"))));
             }
-
+            root.fetch("vehiculo");
+            root.fetch("celda");
             return cb.and(predicates.toArray(new Predicate[0]));
         };
     }

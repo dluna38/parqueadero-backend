@@ -5,6 +5,7 @@ import co.edu.iudigital.parqueadero.models.Tarifa;
 import co.edu.iudigital.parqueadero.repositories.TarifaRespository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,5 +36,9 @@ public class TarifaService {
         if(tarifa.getPorMinutos() == null){
             throw new FieldRequiredException("por minutos");
         }
+    }
+
+    public List<Tarifa> getAllTarifas() {
+        return tarifaRespository.findAll();
     }
 }

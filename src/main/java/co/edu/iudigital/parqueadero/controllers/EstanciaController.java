@@ -28,7 +28,7 @@ public class EstanciaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PageResponse<Estancia>> getDetailEstancia(@PathVariable Long id){
+    public ResponseEntity<Estancia> getDetailEstancia(@PathVariable Long id){
         return ResponseEntity.ok(estanciaService.getDetailEstancia(id));
     }
 

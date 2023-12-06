@@ -23,6 +23,6 @@ public interface EstanciaRepository extends JpaRepository<Estancia,Long>, JpaSpe
     @Query("select e from Estancia e join FETCH e.vehiculo")
     Page<Estancia> findAllCustom(Specification<Estancia> specification, Pageable pageable);
 
-    @Query("select e from Estancia e join FETCH e.vehiculo join fetch e.vehiculo.dueno join fetch e.vehiculo.marca join fetch e.vehiculo.tipoVehiculo")
-    PageResponse<Estancia> findByIdDetail(Long id);
+    @Query("select e from Estancia e join FETCH e.vehiculo join fetch e.vehiculo.dueno join fetch e.vehiculo.marca join fetch e.vehiculo.tipoVehiculo where e.id=:id")
+    Optional<Estancia> findByIdDetail(Long id);
 }

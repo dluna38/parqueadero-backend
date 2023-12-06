@@ -9,6 +9,8 @@ import java.util.Optional;
 @Repository
 public interface PagoRepository extends JpaRepository<Pago,Long> {
 
-    @Query("select p.id from Pago p where p.estancia.id=:id")
-    Long findPagoByEstanciaId(Long id);
+    @Query("select p from Pago p where p.estancia.id=:id")
+    Optional<Pago> findPagoByEstanciaId(Long id);
+
+
 }

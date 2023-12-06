@@ -70,7 +70,10 @@ public class EstanciaService {
         PageRequest pageRequest = UtilParams.getPageRequestFromMapParams(paramsEstancia,
                 "fechaEntrada",equivalenciasSort);
         try {
-            return new PageResponse<>(estanciaRepository.findAllCustom(utilParamEstancia.getSpecificationFilter(paramsEstancia),pageRequest));
+            System.out.println("filtrando");
+            return new PageResponse<>(estanciaRepository.findAll(
+                    utilParamEstancia.getSpecificationFilter(paramsEstancia),
+                    pageRequest));
         } catch (PropertyReferenceException e) {
             throw new ValidationException("ordenarPor","No se encontro el campo");
         }
@@ -115,7 +118,7 @@ public class EstanciaService {
         return estanciaRepository.findById(id);
     }
 
-    public PageResponse<Estancia> getDetailEstancia(Long id) {
-        return estanciaRepository.findByIdDetail(id);
+    public Estancia getDetailEstancia(Long id) {
+        return estanciaRepository.findByIdDetail(id).orElseThrow(()-> new ResourceNotFoundException("estancia"));
     }
 }

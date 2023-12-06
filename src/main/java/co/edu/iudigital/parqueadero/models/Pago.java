@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
+import java.sql.Struct;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,6 +16,7 @@ public class Pago {
     @SequenceGenerator(name = "pago_gen",sequenceName = "pago_seq",allocationSize = 20)
     Long id;
     Long cobroTotal;
+    String metodoPago;
     @OneToOne
     @JoinColumn(name = "fk_estancia",foreignKey = @ForeignKey(name = "fk_estancia_pago"))
     Estancia estancia;
