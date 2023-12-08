@@ -17,7 +17,7 @@ Para ejecutar el proyecto se debe modificar el archivo `application.properties`,
 spring.datasource.url=${DB_URL}
 spring.datasource.username=${DB_USER}
 spring.datasource.password=${DB_PASS}
-JWT_KEY=${JWT_KEY}
+JWT_KEY=${JWT_KEY (32 bit base64)}
 ```
 
 
