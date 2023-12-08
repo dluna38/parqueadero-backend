@@ -12,5 +12,7 @@ public interface PagoRepository extends JpaRepository<Pago,Long> {
     @Query("select p from Pago p where p.estancia.id=:id")
     Optional<Pago> findPagoByEstanciaId(Long id);
 
+    @Query("select p from Pago p join fetch p.estancia e join fetch e.vehiculo v join fetch v.dueno where p.id=:id")
+    Optional<Pago> findDetailPagoById(Long id);
 
 }

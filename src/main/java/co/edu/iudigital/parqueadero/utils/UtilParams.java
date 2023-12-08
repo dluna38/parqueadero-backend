@@ -19,15 +19,13 @@ public class UtilParams {
         if(params.containsKey("pag")){
             try {
                 page = Integer.parseInt(params.get("pag"));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+            } catch (Exception ignored) {
             }
         }
         if(params.containsKey("tam")){
             try {
                 size = Integer.parseInt(params.get("tam"));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+            } catch (Exception ignored) {
             }
         }
         if(equivalenciasSort !=null){
@@ -39,13 +37,12 @@ public class UtilParams {
                 if(params.get("tOrden").equalsIgnoreCase("ASC")){
                     direction = Sort.Direction.ASC;
                 }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+            } catch (Exception ignored) {
             }
         }
-        PageRequest request = PageRequest.of(page,size,Sort.by(direction,sortBy));
+        //PageRequest request =
         //System.out.printf("PAGE REQUEST: page: %d | size: %d | sort: %s %n", request.getPageNumber(),request.getPageSize(),request.getSort());
-        return request;
+        return PageRequest.of(page,size,Sort.by(direction,sortBy));
     }
 
     public static String getSortBy(Map<String,String> equivalencias,Map<String,String> params){

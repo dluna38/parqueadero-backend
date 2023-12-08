@@ -70,7 +70,6 @@ public class EstanciaService {
         PageRequest pageRequest = UtilParams.getPageRequestFromMapParams(paramsEstancia,
                 "fechaEntrada",equivalenciasSort);
         try {
-            System.out.println("filtrando");
             return new PageResponse<>(estanciaRepository.findAll(
                     utilParamEstancia.getSpecificationFilter(paramsEstancia),
                     pageRequest));

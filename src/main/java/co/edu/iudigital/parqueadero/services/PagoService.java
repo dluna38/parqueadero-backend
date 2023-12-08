@@ -7,6 +7,7 @@ import co.edu.iudigital.parqueadero.models.Estancia;
 import co.edu.iudigital.parqueadero.models.Pago;
 import co.edu.iudigital.parqueadero.models.Tarifa;
 import co.edu.iudigital.parqueadero.repositories.PagoRepository;
+import co.edu.iudigital.parqueadero.utils.PdfCreator;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,4 +69,8 @@ public class PagoService {
         return pagoRepository.findAll();
     }
 
+    public byte[] getPdfPago(Long id) {
+        Pago pago = pagoRepository.findDetailPagoById(id).orElseThrow(() -> new ResourceNotFoundException("pago"));
+        return PdfCreator.generarPdfPago(pago);
+    }
 }

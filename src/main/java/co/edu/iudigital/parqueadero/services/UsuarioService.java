@@ -26,7 +26,6 @@ public class UsuarioService {
 
 
     private void validateUsuario(Usuario usuario) {
-        System.out.println(usuario);
         UtilString.validateRequiredField("nombre",usuario.getNombre());
         UtilString.validateRequiredField("telefono",usuario.getTelefono());
         UtilString.validateRequiredField("documento",usuario.getDocumentoIdentidad());

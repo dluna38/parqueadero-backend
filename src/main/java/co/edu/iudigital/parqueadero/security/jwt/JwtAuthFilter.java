@@ -45,9 +45,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             claimsUser = jwtService.extractAllClaims(jwt);
             userEmail = jwtService.extractUsername(claimsUser);
         }catch (JwtException e) {
-            throw new ValidationException("token","no valido");
+            //throw new ValidationException("token","no valido");
+            filterChain.doFilter(request, response);
+            return;
         } catch (RuntimeException e) {
-            throw new UnknownException();
+            throw new UnknownException("jwt");
         }
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
