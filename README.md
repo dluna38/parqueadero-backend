@@ -28,7 +28,7 @@ Construir la aplicación:
 `gradlew build`
 
 Para ejecutar el aplicativo como springboot:
-`gradlew buildbootRun`
+`gradlew bootRun`
 
 O generar el jar y ejecutar con java
 ```
